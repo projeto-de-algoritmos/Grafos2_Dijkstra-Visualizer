@@ -12,12 +12,17 @@ export default class PathfidingVisualiser extends Component{
     constructor(props){
         super(props);
         this.state = {
-            nodes: [],
+            grid: [],
         };
+        this.makeGrid = this.makeGrid.bind(this);
     }
 
     componentDidMount(){
-        const nodes = [];
+        this.makeGrid()
+    }
+
+    makeGrid(){
+        const grid = [];
         for (let row = 0; row < 20; row++) {
            const currentRow = [];
            for(let col =0; col < 50; col++){
@@ -34,32 +39,51 @@ export default class PathfidingVisualiser extends Component{
                 currentRow.push(node);
            }
 
-           nodes.push(currentRow);
+           grid.push(currentRow);
         }
 
-        this.setState({nodes});
+        this.setState({grid});
+    }
+
+    animateDijkstraSpot(visitedNodesInOrder){
+        for (let i = 2; i < visitedNodesInOrder.length -1; i++) {
+            setTimeout(() => {
+                document.getElementById(`node-${visitedNodesInOrder[i].row}-${visitedNodesInOrder[i].col}`).className ='node node-visited';
+            }, 10 * i);
+        }
     }
 
     visualizeDijkstra(){
-        const {nodes} = this.state;
-        const startNode = nodes[START_NODE_ROW][START_NODE_COL];
-        const finishNode = nodes[FINISH_NODE_ROW][FINISH_NODE_COL];
-        const visitedNodesInOrder = dijkstra(nodes, startNode, finishNode);
+        const {grid} = this.state;
+        const startNode = grid[START_NODE_ROW][START_NODE_COL];
+        const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+        const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+        console.log(visitedNodesInOrder[visitedNodesInOrder.length -1].col);
+        console.log(visitedNodesInOrder[visitedNodesInOrder.length -1].row);
+        this.animateDijkstraSpot(visitedNodesInOrder);
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
 
     }
 
     render(){
-        const {nodes} = this.state;
+        const {grid} = this.state;
         return (
             <>
                 <button onClick={() => this.visualizeDijkstra()}>
                 Visualize Dijkstra's Algorithm
                 </button>
+                <button onClick={() => this.makeGrid()}>
+                Reset
+                </button>
                 <div className="grid">
-                    {nodes.map((node, rowIdx) =>{
+                    {grid.map((row, rowIdx) =>{
                         return <div key={rowIdx}>
-                            {node.map((node, nodeIdx) => <Node></Node>)}
+                            {row.map((node, nodeIdx) => {
+                                const {col, row, isStart, isFinish} = node;
+                                return(
+                                    <Node key={nodeIdx} col={col} row={row} isStart={isStart} isFinish={isFinish}></Node>
+                                )
+                            })}
                         </div>
                     })}
                 </div>

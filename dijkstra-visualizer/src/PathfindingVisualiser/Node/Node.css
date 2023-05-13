@@ -4,3 +4,15 @@
     outline: 1px solid black;
     display: inline-block;
 }
+
+.node-visited{
+    background-color: blue;
+}
+
+.node-finish {
+    background-color: red;
+}
+  
+.node-start {
+    background-color: green;
+}
