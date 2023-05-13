@@ -42,13 +42,18 @@ export default class PathfidingVisualiser extends Component{
            grid.push(currentRow);
         }
 
-        this.setState({grid});
+        this.setState({grid: grid});
     }
 
     animateDijkstraSpot(visitedNodesInOrder){
         for (let i = 2; i < visitedNodesInOrder.length -1; i++) {
             setTimeout(() => {
-                document.getElementById(`node-${visitedNodesInOrder[i].row}-${visitedNodesInOrder[i].col}`).className ='node node-visited';
+                const node = document.getElementById(`node-${visitedNodesInOrder[i].row}-${visitedNodesInOrder[i].col}`);
+                node.classList.add('node-visited-animation');
+                setTimeout(() => {
+                    node.classList.remove('node-visited-animation');
+                    node.classList.add('node-visited');
+                }, 400);
             }, 10 * i);
         }
     }
@@ -68,12 +73,9 @@ export default class PathfidingVisualiser extends Component{
     render(){
         const {grid} = this.state;
         return (
-            <>
+            <div>
                 <button onClick={() => this.visualizeDijkstra()}>
-                Visualize Dijkstra's Algorithm
-                </button>
-                <button onClick={() => this.makeGrid()}>
-                Reset
+                    Visualize Dijkstra's Algorithm
                 </button>
                 <div className="grid">
                     {grid.map((row, rowIdx) =>{
@@ -87,7 +89,7 @@ export default class PathfidingVisualiser extends Component{
                         </div>
                     })}
                 </div>
-            </>
+            </div>
         );
     }
 }
