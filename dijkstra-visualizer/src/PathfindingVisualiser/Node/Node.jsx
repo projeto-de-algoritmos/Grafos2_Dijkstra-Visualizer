@@ -14,6 +14,6 @@ export default class Node extends Component{
             : isStart
             ? 'node-start'
             : '';
-        return <div  id={`node-${row}-${col}`} className={`node ${extraClassName}`}></div>
+        return <div  id={`node-${row}-${col}`}  className={`node ${extraClassName}`}></div>
     }
 }

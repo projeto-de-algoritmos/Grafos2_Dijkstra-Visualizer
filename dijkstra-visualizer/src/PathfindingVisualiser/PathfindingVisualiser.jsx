@@ -3,25 +3,59 @@ import Node from "./Node/Node";
 import "./PathfindingVisualiser.css"
 import {dijkstra, getNodesInShortestPathOrder} from './Algorithm/dijkstra';
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 15;
-const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 35;
+
 
 export default class PathfidingVisualiser extends Component{
     constructor(props){
         super(props);
         this.state = {
             grid: [],
+            startNodeCol: 15,
+            startNodeRow: 15,
+            finishNodeCol: 40,
+            finishNodeRow: 10,
+            isWDown: false
         };
         this.makeGrid = this.makeGrid.bind(this);
+        this.getRandomPosition = this.getRandomPosition.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this);
     }
 
     componentDidMount(){
-        this.makeGrid()
+        this.makeGrid();
+        document.addEventListener('keydown', this.handleKeyDown);
+        document.addEventListener('keyup', this.handleKeyUp);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyDown);
+        document.removeEventListener('keyup', this.handleKeyUp);
+    }
+
+    handleKeyDown(event) {
+        if (event.code === 'KeyW') {
+          this.setState({ isWDown: true });
+        }
+    }
+    
+    handleKeyUp(event) {
+        if (event.code === 'KeyW') {
+          this.setState({ isWDown: false });
+        }
+    }
+
+    getRandomPosition() {
+        const startCol = Math.floor(Math.random() * 49);
+        const finishCol = Math.floor(Math.random() * 49);
+        const startRow = Math.floor(Math.random() * 19);
+        const finishRow = Math.floor(Math.random() * 19);
+
+        this.setState({startNodeCol: startCol,startNodeRow: startRow, finishNodeCol: finishCol, finishNodeRow:finishRow});
     }
 
     makeGrid(){
+        const {startNodeCol, startNodeRow, finishNodeCol, finishNodeRow} = this.state;
         const grid = [];
         for (let row = 0; row < 20; row++) {
            const currentRow = [];
@@ -29,12 +63,13 @@ export default class PathfidingVisualiser extends Component{
                 const node = {
                     col,
                     row,
-                    isStart: row === START_NODE_ROW && col === START_NODE_COL,
-                    isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+                    isStart: row === startNodeRow && col === startNodeCol,
+                    isFinish: row === finishNodeRow && col === finishNodeCol,
                     distance: Infinity,
                     isVisited: false,
                     isWall: false,
                     previousNode: null,
+                    hasWeight: false,
                 }
                 currentRow.push(node);
            }
@@ -59,32 +94,47 @@ export default class PathfidingVisualiser extends Component{
     }
 
     visualizeDijkstra(){
-        const {grid} = this.state;
-        const startNode = grid[START_NODE_ROW][START_NODE_COL];
-        const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+        const {grid, startNodeCol, startNodeRow, finishNodeCol, finishNodeRow} = this.state;
+        const startNode = grid[startNodeRow][startNodeCol];
+        const finishNode = grid[finishNodeRow][finishNodeCol];
         const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
         this.animateDijkstraSpot(visitedNodesInOrder);
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     }
 
-    resetGrid(){
-        const {grid} = this.state;
-
+    async resetGrid(){
+        await this.getRandomPosition();
+        const {grid, startNodeCol, startNodeRow, finishNodeCol, finishNodeRow} = this.state;
         for (const row of grid) {
             for (const node of row) {
-                if(node.isStart){
+                if(node.col === startNodeCol && node.row === startNodeRow){
                     document.getElementById(`node-${node.row}-${node.col}`).className ='node node-start';
+                    node.isStart = true;
                 }
-                else if(node.isFinish){
+                else if(node.col === finishNodeCol && node.row === finishNodeRow){
                     document.getElementById(`node-${node.row}-${node.col}`).className ='node node-finish';
+                    node.isFinish = true;
                 } else{
                     document.getElementById(`node-${node.row}-${node.col}`).className ='node';
+                    node.isStart = false;
+                    node.isFinish = false;
                 }
                 node.isVisited = false;
                 node.isWall = false;
                 node.previousNode = null;
                 node.distance = Infinity;
             }
+        }
+    }
+
+    handleNodeClick(row, col) {
+        const { isWDown } = this.state;
+        if(isWDown){
+            const {grid} = this.state;
+
+            //grid[row][col].hasWeight = true;
+
+            // Setar novo grid e alterar algoritmo
         }
     }
 
@@ -106,7 +156,9 @@ export default class PathfidingVisualiser extends Component{
                             {row.map((node, nodeIdx) => {
                                 const {col, row, isStart, isFinish} = node;
                                 return(
-                                    <Node key={nodeIdx} col={col} row={row} isStart={isStart} isFinish={isFinish}></Node>
+                                    <div className="node" onClick={() => this.handleNodeClick(row,col)}>
+                                        <Node key={nodeIdx} col={col} row={row} isStart={isStart} isFinish={isFinish}></Node>
+                                    </div>
                                 )
                             })}
                         </div>
