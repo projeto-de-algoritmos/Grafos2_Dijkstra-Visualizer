@@ -93,6 +93,7 @@ export default class PathfidingVisualiser extends Component{
         }
     }
 
+
     visualizeDijkstra(){
         const {grid, startNodeCol, startNodeRow, finishNodeCol, finishNodeRow} = this.state;
         const startNode = grid[startNodeRow][startNodeCol];
@@ -123,6 +124,7 @@ export default class PathfidingVisualiser extends Component{
                 node.isWall = false;
                 node.previousNode = null;
                 node.distance = Infinity;
+                node.hasWeight = false;
             }
         }
     }
@@ -131,10 +133,23 @@ export default class PathfidingVisualiser extends Component{
         const { isWDown } = this.state;
         if(isWDown){
             const {grid} = this.state;
+            const newGrid = grid.slice();
+            const node = newGrid[row][col];
 
-            //grid[row][col].hasWeight = true;
+            const newNode = {
+                ...node,
+                hasWeight: !node.hasWeight,
+            };
 
-            // Setar novo grid e alterar algoritmo
+            if(newNode.hasWeight){
+                document.getElementById(`node-${row}-${col}`).classList.add('node-wheight');
+            } else{
+                document.getElementById(`node-${row}-${col}`).classList.remove('node-wheight');
+            }
+
+            newGrid[row][col] = newNode;
+
+            this.setState({grid: newGrid});
         }
     }
 

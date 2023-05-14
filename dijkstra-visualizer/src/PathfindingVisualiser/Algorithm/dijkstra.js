@@ -18,7 +18,12 @@ export function dijkstra(grid, startNode, finishNode) {
 
       const unvisitedNeighbors = getUnvisitedNeighbors(closestNode, grid);
       for (const neighbor of unvisitedNeighbors) {
-        heap.update(neighbor, closestNode.distance + 1)
+        if(!neighbor.hasWeight){
+          heap.update(neighbor, closestNode.distance + 1);
+        } else{
+          heap.update(neighbor, closestNode.distance + 10);
+        }
+        
         neighbor.previousNode = closestNode;
       }
 

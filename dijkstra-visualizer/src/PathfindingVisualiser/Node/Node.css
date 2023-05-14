@@ -3,6 +3,7 @@
     height: 25px;
     outline: 1px solid grey;
     display: inline-block;
+    transition: background-image 2s ease-in-out;
 }
 
 .node-visited{
@@ -11,6 +12,13 @@
 
 .node-visited-animation {
     animation: visited 1s linear;
+}
+
+.node-wheight{
+    background-image: url("../../assets/carro.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; 
 }
   
 @keyframes visited {
@@ -23,14 +31,14 @@
 }
 
 .node-finish {
-    background-image: url("../../assets/localizador-de-mapa.png");
+    background-image: url("../../assets/bandeira-de-chegada.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain; 
 }
   
 .node-start {
-    background-image: url("../../assets/botao-de-seta-para-a-direita-do-teclado.png");
+    background-image: url("../../assets/localizador-de-mapa.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain; 
