@@ -63,20 +63,43 @@ export default class PathfidingVisualiser extends Component{
         const startNode = grid[START_NODE_ROW][START_NODE_COL];
         const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
         const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-        console.log(visitedNodesInOrder[visitedNodesInOrder.length -1].col);
-        console.log(visitedNodesInOrder[visitedNodesInOrder.length -1].row);
         this.animateDijkstraSpot(visitedNodesInOrder);
         const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    }
 
+    resetGrid(){
+        const {grid} = this.state;
+
+        for (const row of grid) {
+            for (const node of row) {
+                if(node.isStart){
+                    document.getElementById(`node-${node.row}-${node.col}`).className ='node node-start';
+                }
+                else if(node.isFinish){
+                    document.getElementById(`node-${node.row}-${node.col}`).className ='node node-finish';
+                } else{
+                    document.getElementById(`node-${node.row}-${node.col}`).className ='node';
+                }
+                node.isVisited = false;
+                node.isWall = false;
+                node.previousNode = null;
+                node.distance = Infinity;
+            }
+        }
     }
 
     render(){
         const {grid} = this.state;
         return (
             <div>
-                <button onClick={() => this.visualizeDijkstra()}>
-                    Visualize Dijkstra's Algorithm
-                </button>
+                <div className="navBar">
+                    <button className="visualize-btn"onClick={() => this.visualizeDijkstra()}>
+                        Visualize Dijkstra's Algorithm
+                    </button>
+                    <button className="reset-btn"onClick={() => this.resetGrid()}>
+                        Reset Grid
+                    </button>
+                </div>
                 <div className="grid">
                     {grid.map((row, rowIdx) =>{
                         return <div key={rowIdx}>

@@ -6,7 +6,7 @@
 }
 
 .node-visited{
-    background-color: #6610F2;
+    background-color: #2B59C3;
 }
 
 .node-visited-animation {
@@ -18,14 +18,20 @@
       background-color: white;
     }
     to {
-      background-color: #6610F2;
+      background-color: #1098F7;
     }
 }
 
 .node-finish {
-    background-color:#D11149;
+    background-image: url("../../assets/localizador-de-mapa.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; 
 }
   
 .node-start {
-    background-color: #047a08;
+    background-image: url("../../assets/botao-de-seta-para-a-direita-do-teclado.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; 
 }
