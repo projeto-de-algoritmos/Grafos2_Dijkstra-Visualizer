@@ -47,16 +47,20 @@ export default class PathfidingVisualiser extends Component {
   }
 
   handleMouse = (row, col) => {
-    const { grid } = this.state;
-    const newGrid = setWall(grid, row, col);
-    this.setState({ grid: newGrid, mouseIsPressed: true });
+    const { grid, isWDown } = this.state;
+    if (!isWDown){
+      const newGrid = setWall(grid, row, col);
+      this.setState({ grid: newGrid, mouseIsPressed: true });
+    }
   };
   
   handleMouseClick = (row, col) => {
-    const { grid, mouseIsPressed } = this.state;
-    if (!mouseIsPressed) return;
-    const newGrid = setWall(grid, row, col);
-    this.setState({ grid: newGrid });
+    const { grid, mouseIsPressed, isWDown } = this.state;
+    if (!isWDown){
+      if (!mouseIsPressed) return;
+      const newGrid = setWall(grid, row, col);
+      this.setState({ grid: newGrid });
+    }
   };
   
   handleMouseRe = () => {
