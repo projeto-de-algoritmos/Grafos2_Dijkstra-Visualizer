@@ -113,7 +113,6 @@ export default class PathfidingVisualiser extends Component {
         );
         node.classList.add("node-shortest-path-yellow");
         setTimeout(() => {
-          node.classList.remove("node-shortest-path-yellow");
           node.classList.add("node-shortest-path");
         }, 100);
       }, 50 * i);
