@@ -3,6 +3,8 @@ import Node from "./Node/Node";
 import "./PathfindingVisualiser.css";
 import { dijkstra, getNodesInShortestPathOrder } from "./Algorithm/dijkstra";
 
+import { dfs } from "./Algorithm/dfs";
+
 export default class PathfidingVisualiser extends Component {
   constructor(props) {
     super(props);
@@ -130,6 +132,17 @@ export default class PathfidingVisualiser extends Component {
     this.animateDijkstraPath(nodesInShortestPathOrder);
   }
 
+  async visualizeDfs() {
+    const { grid, startNodeCol, startNodeRow, finishNodeCol, finishNodeRow } =
+      this.state;
+    const startNode = grid[startNodeRow][startNodeCol];
+    const finishNode = grid[finishNodeRow][finishNodeCol];
+    const visitedNodesInOrder = dfs(grid, startNode, finishNode);
+    await this.animateDijkstraSpot(visitedNodesInOrder);
+    //const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+    //this.animateDijkstraPath(nodesInShortestPathOrder);
+  }
+
   async resetGrid() {
     await this.getRandomPosition();
     const { grid, startNodeCol, startNodeRow, finishNodeCol, finishNodeRow } =
@@ -192,6 +205,12 @@ export default class PathfidingVisualiser extends Component {
     return (
       <div>
         <div className="navBar">
+          <button
+            className="visualize-btn"
+            onClick={() => this.visualizeDfs()}
+          >
+            Visualize Depth First Search
+          </button>
           <button
             className="visualize-btn"
             onClick={() => this.visualizeDijkstra()}
