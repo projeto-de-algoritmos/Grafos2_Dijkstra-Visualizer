@@ -15,6 +15,7 @@ export default class PathfidingVisualiser extends Component {
       finishNodeCol: 40,
       finishNodeRow: 10,
       isWDown: false,
+      mouseIsPressed: false,
     };
     this.makeGrid = this.makeGrid.bind(this);
     this.getRandomPosition = this.getRandomPosition.bind(this);
@@ -44,6 +45,23 @@ export default class PathfidingVisualiser extends Component {
       this.setState({ isWDown: false });
     }
   }
+
+  handleMouse = (row, col) => {
+    const { grid } = this.state;
+    const newGrid = setWall(grid, row, col);
+    this.setState({ grid: newGrid, mouseIsPressed: true });
+  };
+  
+  handleMouseClick = (row, col) => {
+    const { grid, mouseIsPressed } = this.state;
+    if (!mouseIsPressed) return;
+    const newGrid = setWall(grid, row, col);
+    this.setState({ grid: newGrid });
+  };
+  
+  handleMouseRe = () => {
+    this.setState({ mouseIsPressed: false });
+  };
 
   getRandomPosition() {
     const startCol = Math.floor(Math.random() * 49);
@@ -201,7 +219,7 @@ export default class PathfidingVisualiser extends Component {
   }
 
   render() {
-    const { grid } = this.state;
+    const { grid, mouseIsPressed } = this.state;
     return (
       <div>
         <div className="navBar">
@@ -226,7 +244,7 @@ export default class PathfidingVisualiser extends Component {
             return (
               <div key={rowIdx}>
                 {row.map((node, nodeIdx) => {
-                  const { col, row, isStart, isFinish } = node;
+                  const { col, row, isStart, isFinish, isWall } = node;
                   return (
                     <div
                       className="node"
@@ -238,6 +256,13 @@ export default class PathfidingVisualiser extends Component {
                         row={row}
                         isStart={isStart}
                         isFinish={isFinish}
+                        isWall={isWall}
+                        mouseIsPressed={mouseIsPressed}
+                        onMouseDown={(row, col) => this.handleMouse(row, col)}
+                        onMouseEnter={(row, col) =>
+                          this.handleMouseClick(row, col)
+                        }
+                        onMouseUp={() => this.handleMouseRe()}
                       ></Node>
                     </div>
                   );
@@ -250,3 +275,17 @@ export default class PathfidingVisualiser extends Component {
     );
   }
 }
+
+const setWall = (grid, row, col) => {
+  return grid.map((rowArr, r) => {
+    if (r !== row) return rowArr;
+    return rowArr.map((node, c) => {
+      if (c !== col) return node;
+      return {
+        ...node,
+        isWall: !node.isWall,
+      };
+    });
+  });
+};
+
