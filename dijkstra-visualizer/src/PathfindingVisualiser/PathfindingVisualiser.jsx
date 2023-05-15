@@ -106,7 +106,7 @@ export default class PathfidingVisualiser extends Component {
 
   animateDijkstraSpot(visitedNodesInOrder) {
     const promises = [];
-    for (let i = 1; i < visitedNodesInOrder.length - 1; i++) {
+    for (let i = 1; i < visitedNodesInOrder.length; i++) {
       const promise = new Promise((resolve) => {
         setTimeout(() => {
           const node = document.getElementById(
@@ -126,7 +126,7 @@ export default class PathfidingVisualiser extends Component {
   }
 
   animateDijkstraPath(nodesInShortestPathOrder) {
-    for (let i = 0; i < nodesInShortestPathOrder.length-1; i++) {
+    for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = document.getElementById(
           `node-${nodesInShortestPathOrder[i].row}-${nodesInShortestPathOrder[i].col}`

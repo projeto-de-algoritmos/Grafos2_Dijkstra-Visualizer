@@ -51,6 +51,9 @@ export function dijkstra(grid, startNode, finishNode) {
   export function getNodesInShortestPathOrder(finishNode) {
     const nodesInShortestPathOrder = [];
     let currentNode = finishNode;
+    if(finishNode.previousNode === null){
+      return nodesInShortestPathOrder;
+    }
     while (currentNode !== null) {
       nodesInShortestPathOrder.unshift(currentNode);
       currentNode = currentNode.previousNode;
