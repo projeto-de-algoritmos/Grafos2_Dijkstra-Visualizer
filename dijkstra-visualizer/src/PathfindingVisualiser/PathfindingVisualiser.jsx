@@ -104,7 +104,7 @@ export default class PathfidingVisualiser extends Component {
     this.setState({ grid: grid });
   }
 
-  animateDijkstraSpot(visitedNodesInOrder) {
+  animateSpot(visitedNodesInOrder) {
     const promises = [];
     for (let i = 1; i < visitedNodesInOrder.length; i++) {
       const promise = new Promise((resolve) => {
@@ -125,7 +125,7 @@ export default class PathfidingVisualiser extends Component {
     return Promise.all(promises);
   }
 
-  animateDijkstraPath(nodesInShortestPathOrder) {
+  animatePath(nodesInShortestPathOrder) {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = document.getElementById(
@@ -145,9 +145,9 @@ export default class PathfidingVisualiser extends Component {
     const startNode = grid[startNodeRow][startNodeCol];
     const finishNode = grid[finishNodeRow][finishNodeCol];
     const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-    await this.animateDijkstraSpot(visitedNodesInOrder);
+    await this.animateSpot(visitedNodesInOrder);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    this.animateDijkstraPath(nodesInShortestPathOrder);
+    this.animatePath(nodesInShortestPathOrder);
   }
 
   async visualizeDfs() {
@@ -156,9 +156,7 @@ export default class PathfidingVisualiser extends Component {
     const startNode = grid[startNodeRow][startNodeCol];
     const finishNode = grid[finishNodeRow][finishNodeCol];
     const visitedNodesInOrder = dfs(grid, startNode, finishNode);
-    await this.animateDijkstraSpot(visitedNodesInOrder);
-    //const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    //this.animateDijkstraPath(nodesInShortestPathOrder);
+    await this.animateSpot(visitedNodesInOrder);
   }
 
   async resetGrid() {
