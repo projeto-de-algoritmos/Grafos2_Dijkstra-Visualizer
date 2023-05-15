@@ -4,6 +4,7 @@ import "./PathfindingVisualiser.css";
 import { dijkstra, getNodesInShortestPathOrder } from "./Algorithm/dijkstra";
 
 import { dfs } from "./Algorithm/dfs";
+import { bfs } from "./Algorithm/bfs";
 
 export default class PathfidingVisualiser extends Component {
   constructor(props) {
@@ -163,6 +164,15 @@ export default class PathfidingVisualiser extends Component {
     await this.animateSpot(visitedNodesInOrder);
   }
 
+  async visualizeBfs() {
+    const { grid, startNodeCol, startNodeRow, finishNodeCol, finishNodeRow } =
+      this.state;
+    const startNode = grid[startNodeRow][startNodeCol];
+    const finishNode = grid[finishNodeRow][finishNodeCol];
+    const visitedNodesInOrder = bfs(grid, startNode, finishNode);
+    await this.animateSpot(visitedNodesInOrder);
+  }
+
   async resetGrid() {
     await this.getRandomPosition();
     const { grid, startNodeCol, startNodeRow, finishNodeCol, finishNodeRow } =
@@ -230,6 +240,12 @@ export default class PathfidingVisualiser extends Component {
             onClick={() => this.visualizeDfs()}
           >
             Visualize Depth First Search
+          </button>
+          <button
+            className="visualize-btn"
+            onClick={() => this.visualizeBfs()}
+          >
+            Visualize Breadth First Search
           </button>
           <button
             className="visualize-btn"
