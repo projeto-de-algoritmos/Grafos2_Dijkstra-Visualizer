@@ -126,7 +126,7 @@ export default class PathfidingVisualiser extends Component {
   }
 
   animateDijkstraPath(nodesInShortestPathOrder) {
-    for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
+    for (let i = 0; i < nodesInShortestPathOrder.length-1; i++) {
       setTimeout(() => {
         const node = document.getElementById(
           `node-${nodesInShortestPathOrder[i].row}-${nodesInShortestPathOrder[i].col}`
