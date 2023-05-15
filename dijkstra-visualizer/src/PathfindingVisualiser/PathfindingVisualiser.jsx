@@ -86,7 +86,7 @@ export default class PathfidingVisualiser extends Component {
 
   animateDijkstraSpot(visitedNodesInOrder) {
     const promises = [];
-    for (let i = 2; i < visitedNodesInOrder.length - 1; i++) {
+    for (let i = 1; i < visitedNodesInOrder.length - 1; i++) {
       const promise = new Promise((resolve) => {
         setTimeout(() => {
           const node = document.getElementById(

@@ -4,7 +4,11 @@ export function dijkstra(grid, startNode, finishNode) {
     const visitedNodesInOrder = [];
     startNode.distance = 0;
     const heap = new MinHeap();
-    heap.push(startNode);
+    for (const row of grid) {
+      for (const node of row) {
+        heap.push(node);
+      }
+    }
 
     while (!heap.isEmpty()) {
       const closestNode = heap.pop();
