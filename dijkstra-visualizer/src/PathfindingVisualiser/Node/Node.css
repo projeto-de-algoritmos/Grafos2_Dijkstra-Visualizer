@@ -1,45 +1,49 @@
 .node {
-    width: 25px;
-    height: 25px;
-    outline: 1px solid grey;
-    display: inline-block;
-    transition: background-image 2s ease-in-out;
+  width: 25px;
+  height: 25px;
+  outline: 1px solid grey;
+  display: inline-block;
+  transition: background-image 2s ease-in-out;
 }
 
-.node-visited{
-    background-color: #2B59C3;
+.node-visited {
+  background-color: #2b59c3;
 }
 
 .node-visited-animation {
-    animation: visited 1s linear;
+  animation: visited 1s linear;
 }
 
-.node-wheight{
-    background-image: url("../../assets/carro.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain; 
+.node-shortest-path-yellow {
+  background-color: yellow;
 }
-  
+
+.node-wheight {
+  background-image: url("../../assets/carro.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 @keyframes visited {
-    from {
-      background-color: white;
-    }
-    to {
-      background-color: #1098F7;
-    }
+  from {
+    background-color: white;
+  }
+  to {
+    background-color: #1098f7;
+  }
 }
 
 .node-finish {
-    background-image: url("../../assets/bandeira-de-chegada.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain; 
+  background-image: url("../../assets/bandeira-de-chegada.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
-  
+
 .node-start {
-    background-image: url("../../assets/localizador-de-mapa.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain; 
+  background-image: url("../../assets/localizador-de-mapa.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
