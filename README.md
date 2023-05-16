@@ -71,6 +71,6 @@ Para rodar o projeto, tenha o node instalado e rode os seguintes comandos:
 
 Esse projeto, tem a finalidade de demonstrar o funcionamento alguns algoritmos de busca e destacar o menor caminho. Além dos algoritmos, temos algumas outras funcionalidades para deixar o software mais interessante, como a possibilidade de adicionar pesos segurando a tecla "W" e clicando nas células desejadas, que deixam o caminho mais lento para o algoritmo Dijkstra, também é possível adicionar paredes segurando e arrastando o mouse no grid, pelo qual o algoritmo terá que contornar para chegar ao fim.
 
-## Outros
+## Vídeo
 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
+O vídeo de apresentação do trabalho pode ser encontrado a partir do seguinte [link](https://youtu.be/u021Ls7yLMI)
