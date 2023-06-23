@@ -74,3 +74,8 @@ Esse projeto, tem a finalidade de demonstrar o funcionamento alguns algoritmos d
 ## Vídeo
 
 O vídeo de apresentação do trabalho pode ser encontrado a partir do seguinte [link youtube](https://youtu.be/u021Ls7yLMI) | [link sharepoint](https://unbbr.sharepoint.com/sites/GravaoPA509/_layouts/15/stream.aspx?id=%2Fsites%2FGravaoPA509%2FDocumentos%20Compartilhados%2FGeneral%2FGrafos%202%2DLucas%20e%20Eurico%2Emp4&ga=1](https://unbbr.sharepoint.com/:v:/s/GravaoPA509/EdMrsVGYFBJDgaJO-ZtkwgUBOEo6uwKwGD7V5oRkb9_Ukw?e=qi6bDZ)https://unbbr.sharepoint.com/:v:/s/GravaoPA509/EdMrsVGYFBJDgaJO-ZtkwgUBOEo6uwKwGD7V5oRkb9_Ukw?e=qi6bDZ)
+
+Vídeo sem compressão se encontra na pasta assets
+
+https://github.com/projeto-de-algoritmos/Grafos2_Dijkstra-Visualizer/assets/64049043/71279244-15cf-45f1-90e1-95c88d61cfa6
+
